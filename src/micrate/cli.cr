@@ -72,7 +72,9 @@ Commands:
     redo       Re-run the latest migration
     status     dump the migration status for the current DB
     create     Create the scaffolding for a new migration
-    dbversion  Print the current version of the database"
+    dbversion  Print the current version of the database
+    version    Print the current version of Micrate"
+    
     end
 
     def self.run
@@ -97,6 +99,8 @@ Commands:
           run_create
         when "dbversion"
           run_dbversion
+        when "version"
+          puts VERSION
         else
           print_help
         end
