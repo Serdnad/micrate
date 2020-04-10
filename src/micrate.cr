@@ -48,6 +48,18 @@ module Micrate
     end
   end
 
+  # Rolls back all current migrations and then runs up on success.
+  def self.reset(db)
+    all_migrations = migrations_by_version
+
+    current = dbversion(db)
+    last = all_migrations.keys.sort.last
+
+    if migrate(all_migrations, current, 0, db) == :success
+      migrate(all_migrations, 0, last, db)
+    end
+  end
+
   def self.migration_status(db) : Hash(Migration, Time?)
     # ensure that migration table exists
     dbversion(db)

@@ -20,6 +20,12 @@ module Micrate
       end
     end
 
+    def self.run_reset
+      DB.connect do |db|
+        Micrate.reset(db)
+      end
+    end
+
     def self.run_status
       DB.connect do |db|
         puts "Applied At                  Migration"
@@ -70,6 +76,7 @@ Commands:
     up         Migrate the DB to the most recent version available
     down       Roll back the version by 1
     redo       Re-run the latest migration
+    reset      Rolls back and reapplies all migrations
     status     dump the migration status for the current DB
     create     Create the scaffolding for a new migration
     dbversion  Print the current version of the database"
@@ -91,6 +98,8 @@ Commands:
           run_down
         when "redo"
           run_redo
+        when "reset"
+          run_reset
         when "status"
           run_status
         when "create"
